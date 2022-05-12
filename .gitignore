@@ -1,0 +1,11 @@
+# Python
+*.pyc
+*.egg-info
+.venv
+
+# Django
+*.mo
+
+*.sql
+*.db
+.*.swp
