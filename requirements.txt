@@ -1,4 +1,6 @@
 django
 django-rest-framework
 psycopg2-binary
+django-tenant-schemas
 django-tenants
+django-extensions

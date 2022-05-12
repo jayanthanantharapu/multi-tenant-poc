@@ -43,22 +43,17 @@ SHARED_APPS = (
 TENANT_APPS = (
     # The following Django contrib apps must be in TENANT_APPS
     "tenant_service",
-    "django.contrib.contenttypes",
-    "django.contrib.auth",
 )
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'rest_framework',
+    'django_extensions',
 ]
 
 INSTALLED_APPS += list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-TENANT_MODEL = "processor.Client" # app.Model
+TENANT_MODEL = "processor.Client"  # app.Model
 
 TENANT_DOMAIN_MODEL = "processor.Domain"  # app.Model
 
@@ -103,9 +98,6 @@ WSGI_APPLICATION = 'multitenantpoc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'OPTIONS': {
-            'options': '-c search_path=django,public'
-        },
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
