@@ -6,6 +6,11 @@
 # Django
 *.mo
 
+db.sqlite3
 *.sql
 *.db
 .*.swp
+
+## Jetbrains
+.idea
+*.iml
