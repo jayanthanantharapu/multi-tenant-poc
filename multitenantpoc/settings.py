@@ -30,6 +30,23 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+SHARED_APPS = (
+    "tenant_schemas",  # mandatory
+    "processor",  # you must list the app where your tenant model resides in
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+)
+
+TENANT_APPS = (
+    # The following Django contrib apps must be in TENANT_APPS
+    "tenant_service",
+    "django.contrib.contenttypes",
+    "django.contrib.auth",
+)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,7 +56,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+INSTALLED_APPS += list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+TENANT_MODEL = "processor.Client" # app.Model
+
+TENANT_DOMAIN_MODEL = "processor.Domain"  # app.Model
+
+TENANT_SUBFOLDER_PREFIX = "clients"
+
 MIDDLEWARE = [
+    'django_tenants.middleware.TenantSubfolderMiddleware',
+    # 'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,10 +102,19 @@ WSGI_APPLICATION = 'multitenantpoc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django_tenants.postgresql_backend',
+        'OPTIONS': {
+            'options': '-c search_path=django,public'
+        },
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
+
+DATABASE_ROUTERS = ("tenant_schemas.routers.TenantSyncRouter",)
 
 
 # Password validation
