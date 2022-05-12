@@ -57,7 +57,11 @@ TENANT_MODEL = "processor.Client"  # app.Model
 
 TENANT_DOMAIN_MODEL = "processor.Domain"  # app.Model
 
-TENANT_SUBFOLDER_PREFIX = "clients"
+TENANT_SUBFOLDER_PREFIX = "tenant"
+
+PUBLIC_SCHEMA_URLCONF = 'processor.urls_public'
+
+SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 
 MIDDLEWARE = [
     'django_tenants.middleware.TenantSubfolderMiddleware',
