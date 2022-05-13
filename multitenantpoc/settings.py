@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 SHARED_APPS = (
-    "tenant_schemas",  # mandatory
+    "django_tenants",
+    # "tenant_schemas",  # mandatory
     "processor",  # you must list the app where your tenant model resides in
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,6 +44,10 @@ SHARED_APPS = (
 TENANT_APPS = (
     # The following Django contrib apps must be in TENANT_APPS
     "tenant_service",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
 )
 
 INSTALLED_APPS = [
@@ -75,7 +80,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'multitenantpoc.urls'
+ROOT_URLCONF = 'tenant_service.urls'
+
+PG_EXTRA_SEARCH_PATHS = ['extensions']
 
 TEMPLATES = [
     {
@@ -110,7 +117,7 @@ DATABASES = {
     }
 }
 
-DATABASE_ROUTERS = ("tenant_schemas.routers.TenantSyncRouter",)
+DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
 
 # Password validation
