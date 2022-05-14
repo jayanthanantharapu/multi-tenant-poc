@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from rest_framework import status
-
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,7 +12,7 @@ class UserCreate(APIView):
     Creates the user.
     """
 
-    def post(self, request, format='json'):
+    def post(self, request, format="json"):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
