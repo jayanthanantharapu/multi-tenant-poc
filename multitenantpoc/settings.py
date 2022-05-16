@@ -39,6 +39,10 @@ SHARED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.admin",
+    "django_extensions",
+    "rest_framework",
+    "rest_framework.authtoken",
 )
 
 TENANT_APPS = (
@@ -48,15 +52,20 @@ TENANT_APPS = (
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "rest_framework",
+    "rest_framework.authtoken",
 )
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'rest_framework',
-    'django_extensions',
-]
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-INSTALLED_APPS += list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+               'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES':(
+                'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 TENANT_MODEL = "processor.Client"  # app.Model
 

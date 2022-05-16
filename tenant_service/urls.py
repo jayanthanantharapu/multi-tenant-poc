@@ -7,7 +7,8 @@ from tenant_service import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', views.UserCreate.as_view()),
-    path('users/login/', views.UserCreate.as_view()),
+    path('users/login/', views.login),
+    path('users/logout/', views.Logout.as_view()),
     path('patient/', views.PatientView.as_view()),
 ]
 
