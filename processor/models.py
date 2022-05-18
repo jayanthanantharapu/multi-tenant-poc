@@ -1,9 +1,6 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models
 from django_tenants.models import TenantMixin, DomainMixin
-from django_tenants.utils import get_tenant_type_choices
 
 
 class Client(TenantMixin):
@@ -16,4 +13,6 @@ class Client(TenantMixin):
 
 
 class Domain(DomainMixin):
-    pass
+
+    def __str__(self):
+        return repr(self.domain)
