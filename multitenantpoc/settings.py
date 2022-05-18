@@ -77,6 +77,8 @@ PUBLIC_SCHEMA_URLCONF = 'processor.urls_public'
 
 SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 
+TENANT_COLOR_ADMIN_APPS = False
+
 MIDDLEWARE = [
     'django_tenants.middleware.TenantSubfolderMiddleware',
     # 'django_tenants.middleware.main.TenantMainMiddleware',

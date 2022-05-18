@@ -4,7 +4,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -23,6 +23,7 @@ class UserCreate(APIView):
     """
     Creates the user.
     """
+    permission_classes = (AllowAny,)
 
     def post(self, request, format='json'):
         serializer = UserSerializer(data=request.data)
@@ -57,7 +58,10 @@ def login(request):
 
 
 class Logout(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, format=None):
         # simply delete the token to force a login
         request.user.auth_token.delete()
+        logout(request)
         return Response(status=status.HTTP_200_OK)
